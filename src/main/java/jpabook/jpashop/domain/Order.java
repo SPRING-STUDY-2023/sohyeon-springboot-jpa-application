@@ -43,6 +43,13 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    public Order(Member member, Delivery delivery, LocalDateTime orderDate, OrderStatus status) {
+        this.member = member;
+        this.delivery = delivery;
+        this.orderDate = orderDate;
+        this.status = status;
+    }
+
     // == 연관관계 편의 메소드 == //
     public void setMember(Member member) {
         this.member = member;
@@ -50,8 +57,8 @@ public class Order {
     }
 
     public void addOrderItem(OrderItem orderItem) {
-         orderItems.add(orderItem);
-         orderItem.setOrder(this);
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
     }
 
     public void setDelivery(Delivery delivery) {
@@ -61,12 +68,7 @@ public class Order {
 
     // == 생성 메서드 == //
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
-        Order order = Order.builder()
-            .member(member)
-            .delivery(delivery)
-            .status(OrderStatus.ORDER)
-            .orderDate(LocalDateTime.now())
-            .build();
+        Order order = new Order(member, delivery, LocalDateTime.now(), OrderStatus.ORDER);
 
         for (OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
