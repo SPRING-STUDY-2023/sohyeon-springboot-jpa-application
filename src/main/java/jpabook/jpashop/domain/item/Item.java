@@ -2,7 +2,10 @@ package jpabook.jpashop.domain.item;
 
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughtStockException;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -14,6 +17,9 @@ import static javax.persistence.InheritanceType.*;
 @Entity
 @Inheritance(strategy = SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @Getter
 public abstract class Item {
 

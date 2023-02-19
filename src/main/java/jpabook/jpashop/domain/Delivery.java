@@ -1,12 +1,18 @@
 package jpabook.jpashop.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 public class Delivery {
 
