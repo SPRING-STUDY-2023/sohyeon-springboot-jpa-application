@@ -1,7 +1,9 @@
 package jpabook.jpashop.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +15,8 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "orders")
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 public class Order {
