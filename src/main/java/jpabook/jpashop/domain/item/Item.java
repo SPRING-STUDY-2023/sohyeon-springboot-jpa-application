@@ -21,7 +21,7 @@ import static javax.persistence.InheritanceType.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Getter
+@Getter @Setter
 public abstract class Item {
 
     @Id
