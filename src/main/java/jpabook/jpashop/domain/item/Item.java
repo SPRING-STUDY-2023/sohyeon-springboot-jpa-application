@@ -5,6 +5,7 @@ import jpabook.jpashop.exception.NotEnoughtStockException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ import static javax.persistence.InheritanceType.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Getter
+@Getter @Setter
 public abstract class Item {
 
     @Id
