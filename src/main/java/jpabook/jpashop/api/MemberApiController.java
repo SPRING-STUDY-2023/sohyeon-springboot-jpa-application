@@ -1,7 +1,11 @@
 package jpabook.jpashop.api;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -72,5 +76,31 @@ public class MemberApiController {
 		private String name;
 	}
 
+	@GetMapping("/api/v1/members")
+	public List<Member> membersV1() {
+		return memberService.findMembers();
+	}
+
+	@GetMapping("/api/v2/members")
+	public Result membersV2() {
+		List<Member> foundMembers = memberService.findMembers();
+		List<MemberDto> collect = foundMembers.stream()
+			.map(member -> new MemberDto(member.getUsername()))
+			.toList();
+
+		return new Result(collect);
+	}
+
+	@Data
+	@AllArgsConstructor
+	static class MemberDto {
+		private String name;
+	}
+
+	@Data
+	@AllArgsConstructor
+	static class Result<T> {
+		private T data;
+	}
 
 }
