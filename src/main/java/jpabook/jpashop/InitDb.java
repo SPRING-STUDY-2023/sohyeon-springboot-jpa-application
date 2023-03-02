@@ -76,8 +76,8 @@ public class InitDb {
 			book2.setStockQuantity(100);
 			em.persist(book2);
 
-			OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 1);
-			OrderItem orderItem2 = OrderItem.createOrderItem(book2, 20000, 2);
+			OrderItem orderItem1 = OrderItem.createOrderItem(book1, 30000, 3);
+			OrderItem orderItem2 = OrderItem.createOrderItem(book2, 20000, 1);
 
 			Delivery delivery = new Delivery();
 			delivery.setAddress(member.getAddress());
