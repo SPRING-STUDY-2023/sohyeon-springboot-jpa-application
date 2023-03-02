@@ -14,6 +14,8 @@ import java.util.List;
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
 
+import org.hibernate.annotations.BatchSize;
+
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,6 +33,7 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    // @BatchSize(size = 1000)
     @OneToMany(mappedBy = "order", cascade = ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
