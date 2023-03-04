@@ -15,6 +15,9 @@ import java.util.List;
 
 import static javax.persistence.InheritanceType.*;
 
+import org.hibernate.annotations.BatchSize;
+
+// @BatchSize(size = 100)
 @Entity
 @Inheritance(strategy = SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
