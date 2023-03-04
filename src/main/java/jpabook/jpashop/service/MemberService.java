@@ -2,6 +2,8 @@ package jpabook.jpashop.service;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +29,7 @@ public class MemberService {
 	}
 
 	private void validateDuplicateMember(Member member) {
-		List<Member> foundMembers = memberRepository.findByName(member.getUsername());
+		List<Member> foundMembers = memberRepository.findByUsername(member.getUsername());
 		if (!foundMembers.isEmpty()) {
 			throw new IllegalStateException("이미 존재하는 회원입니다.");
 		}
@@ -44,7 +46,8 @@ public class MemberService {
 	 * 회원 단건 조회
 	 */
 	public Member findOne(Long memberId) {
-		return memberRepository.findOne(memberId);
+		return memberRepository.findById(memberId)
+			.orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원"));
 	}
 
 	/**
@@ -52,7 +55,8 @@ public class MemberService {
 	 */
 	@Transactional
 	public void update(Long id, String name) {
-		Member member = memberRepository.findOne(id);
+		Member member = memberRepository.findById(id)
+			.orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원"));
 		member.setUsername(name);
 	}
 }

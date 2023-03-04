@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.repository.MemberRepository;
+import jpabook.jpashop.repository.MemberRepositoryOld;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -20,7 +20,7 @@ class MemberServiceTest {
 	@Autowired
 	private MemberService memberService;
 	@Autowired
-	private MemberRepository memberRepository;
+	private MemberRepositoryOld MemberRepositoryOld;
 
 	@Test
 	public void 회원가입() throws Exception {
@@ -33,7 +33,7 @@ class MemberServiceTest {
 		Long savedId = memberService.join(member);
 
 		// then
-		assertEquals(member, memberRepository.findOne(savedId));
+		assertEquals(member, MemberRepositoryOld.findOne(savedId));
 	}
 
 	@Test
