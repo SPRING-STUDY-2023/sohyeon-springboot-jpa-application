@@ -2,11 +2,13 @@ package jpabook.jpashop.service;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.repository.MemberRepositoryOld;
+import jpabook.jpashop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -14,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberService {
 
-	private final MemberRepositoryOld MemberRepositoryOld;
+	private final MemberRepository memberRepository;
 
 	/**
 	 * 회원 가입
@@ -22,12 +24,12 @@ public class MemberService {
 	@Transactional
 	public Long join(Member member) {
 		validateDuplicateMember(member); // 중복 회원 검증
-		MemberRepositoryOld.save(member);
+		memberRepository.save(member);
 		return member.getId();
 	}
 
 	private void validateDuplicateMember(Member member) {
-		List<Member> foundMembers = MemberRepositoryOld.findByName(member.getUsername());
+		List<Member> foundMembers = memberRepository.findByUsername(member.getUsername());
 		if (!foundMembers.isEmpty()) {
 			throw new IllegalStateException("이미 존재하는 회원입니다.");
 		}
@@ -37,14 +39,15 @@ public class MemberService {
 	 * 회원 전체 조회
 	 */
 	public List<Member> findMembers() {
-		return MemberRepositoryOld.findAll();
+		return memberRepository.findAll();
 	}
 
 	/**
 	 * 회원 단건 조회
 	 */
 	public Member findOne(Long memberId) {
-		return MemberRepositoryOld.findOne(memberId);
+		return memberRepository.findById(memberId)
+			.orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원"));
 	}
 
 	/**
@@ -52,7 +55,8 @@ public class MemberService {
 	 */
 	@Transactional
 	public void update(Long id, String name) {
-		Member member = MemberRepositoryOld.findOne(id);
+		Member member = memberRepository.findById(id)
+			.orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원"));
 		member.setUsername(name);
 	}
 }
